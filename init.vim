@@ -11,6 +11,7 @@ call vundle#begin('~/.config/nvim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 
 " Plugins
+Plugin 'scrooloose/nerdtree'
 Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plugin 'w0rp/ale'
 Plugin 'SirVer/ultisnips'
@@ -21,4 +22,7 @@ filetype plugin indent on    " required
 
 let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog='/usr/local/opt/python3/bin/python3.6'
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 
+map <C-n> :NERDTreeToggle<CR>
