@@ -72,8 +72,9 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetDir='~/.config/nvim/bundle/ultisnips/my_snips'
-let g:UltiSnipsSnippetDirectories= ['my_snips', 'UltiSnips']"['~/.config/nvim/bundle/ultisnip/my_snips']
+let g:UltiSnipsSnippetsDir = $HOME."/.config/nvim/UltiSnips"
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/nvim/UltiSnips']
+let g:UltiSnipsEnableSnipMate = 0
 
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
