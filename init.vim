@@ -15,6 +15,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Plugins
 " =====================================
 Plugin 'kristijanhusak/vim-hybrid-material'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plugin 'w0rp/ale'
@@ -29,9 +30,9 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 syntax on
 
-let g:enable_bold_font = 1
-let g:enable_italic_font = 1
-
+" =====================================
+" Mappings
+" =====================================
 " change the leader key from "\" to ";" ("," is also popular)
 let mapleader=";"
 
@@ -50,8 +51,17 @@ nnoremap <silent> <leader>n :set number! number?<CR>
 " toggle line wrap
 nnoremap <silent> <leader>w :set wrap! wrap?<CR>
 
+nnoremap <silent> <leader>h :call ToggleHiddenAll()<CR>
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+map <C-n> :NERDTreeToggle<CR>
+
 " =====================================
-" Functions
 " =====================================
 function! Dark()
     echom "set bg=dark"
@@ -88,7 +98,10 @@ function! ToggleHiddenAll()
     endif
 endfunction
 
-nnoremap <silent> <leader>h :call ToggleHiddenAll()<CR>
+" =====================================
+" Variables
+" =====================================
+let g:airline_theme='hybrid'
 
 " python path
 let g:python3_host_prog = '/usr/local/bin/python3.6'
@@ -130,7 +143,6 @@ let g:deoplete#sources.vim = ['vim']
 " deoplete-racer config
 let g:deoplete#sources#rust#racer_binary='/Users/aenayet/.cargo/bin/racer'
 let g:deoplete#sources#rust#rust_source_path= '/Users/aenayet/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src'
-
 " deoplete end
 
 let g:UltiSnipsUsePythonVersion = 3
@@ -142,18 +154,11 @@ let g:UltiSnipsSnippetsDir = $HOME."/.config/nvim/UltiSnips"
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/nvim/UltiSnips']
 let g:UltiSnipsEnableSnipMate = 0
 
+let g:enable_bold_font = 1
+let g:enable_italic_font = 1
+
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:chromatica#enable_at_startup = 1
 let g:chromatica#libclang_path = '/usr/local/opt/llvm/lib'
 
-" =====================================
-" Navigation
-" =====================================
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
-map <C-n> :NERDTreeToggle<CR>
