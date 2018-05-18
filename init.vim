@@ -108,8 +108,13 @@ let g:python3_host_prog = '/usr/local/bin/python3.6'
 let g:python_host_prog = '/usr/local/bin/python2.7'
 
 " lang server
+let g:LangaugeClient_autoStart = 1
+let g:LanguageClient_settingsPath = $HOME.'/.config/nvim/settings.json'
+"let g:LanguageClient_loadSettings = 1
+let g:LanguageClient_logginLevel = 'DEBUG'
 let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls', '-v'],
+	\ 'cpp': ['/Users/normanziebal/cquery/build/release/bin/cquery', '--log-file=/tmp/cq.log'],
+	\ 'python': ['pyls', '-v'],
 \ }
 
 " deoplete options
@@ -129,16 +134,11 @@ endif
 call deoplete#custom#source('_',
             \ 'disabled_syntaxes', ['Comment', 'String'])
 
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+call deoplete#custom#source('LanguageClient',
+            \ 'min_pattern_length',
+            \ 2)
 
-" set sources
-let g:deoplete#sources = {}
-let g:deoplete#sources.cpp = ['LanguageClient']
-let g:deoplete#sources.python = ['LanguageClient']
-let g:deoplete#sources.python3 = ['LanguageClient']
-let g:deoplete#sources.rust = ['LanguageClient']
-let g:deoplete#sources.c = ['LanguageClient']
-let g:deoplete#sources.vim = ['vim']
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " deoplete-racer config
 let g:deoplete#sources#rust#racer_binary='/Users/aenayet/.cargo/bin/racer'
@@ -146,9 +146,9 @@ let g:deoplete#sources#rust#rust_source_path= '/Users/aenayet/.rustup/toolchains
 " deoplete end
 
 let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetsDir = $HOME."/.config/nvim/UltiSnips"
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', $HOME.'/.config/nvim/UltiSnips']
@@ -157,8 +157,19 @@ let g:UltiSnipsEnableSnipMate = 0
 let g:enable_bold_font = 1
 let g:enable_italic_font = 1
 
+let g:ale_completion_enabled = 1
+
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:chromatica#enable_at_startup = 1
 let g:chromatica#libclang_path = '/usr/local/opt/llvm/lib'
 
+" =====================================
+" Test
+" =====================================
+imap <expr> <CR> (pumvisible() ? "\<C-Y>\<Plug>(expand_or_cr)" : "\<CR>")
+imap <expr> <Plug>(expand_or_cr) (cm#completed_is_snippet() ? "\<C-U>" : "\<CR>")
+let g:UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
+inoremap <silent> <C-U> <C-R>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<CR>
+let g:UltiSnipsJumpForwardTrigger = "<C-J>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
