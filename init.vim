@@ -53,13 +53,24 @@ nnoremap <silent> <leader>w :set wrap! wrap?<CR>
 
 nnoremap <silent> <leader>h :call ToggleHiddenAll()<CR>
 
-"split navigations
+" split navigations
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 map <C-n> :NERDTreeToggle<CR>
+
+" Disable arrow keys:
+nnoremap <up> 		<nop>
+nnoremap <down>		<nop>
+nnoremap <left>		<nop>
+nnoremap <right>	<nop>
+
+inoremap <up>		<nop>
+inoremap <down>		<nop>
+inoremap <left>		<nop>
+inoremap <right>	<nop>
 
 " =====================================
 " =====================================
@@ -138,6 +149,8 @@ call deoplete#custom#source('LanguageClient',
             \ 'min_pattern_length',
             \ 2)
 
+call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
+
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " deoplete-racer config
@@ -167,9 +180,16 @@ let g:chromatica#libclang_path = '/usr/local/opt/llvm/lib'
 " =====================================
 " Test
 " =====================================
-imap <expr> <CR> (pumvisible() ? "\<C-Y>\<Plug>(expand_or_cr)" : "\<CR>")
-imap <expr> <Plug>(expand_or_cr) (cm#completed_is_snippet() ? "\<C-U>" : "\<CR>")
-let g:UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
-inoremap <silent> <C-U> <C-R>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<CR>
-let g:UltiSnipsJumpForwardTrigger = "<C-J>"
-let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+"imap <expr> <CR> (pumvisible() ? "\<C-Y>\<Plug>(expand_or_cr)" : "\<CR>")
+"imap <expr> <Plug>(expand_or_cr) (cm#completed_is_snippet() ? "\<C-U>" : "\<CR>")
+"let g:UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
+"inoremap <silent> <C-U> <C-R>=cm#sources#ultisnips#trigger_or_popup("\<Plug>(ultisnips_expand)")<CR>
+"let g:UltiSnipsJumpForwardTrigger = "<C-J>"
+"let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
