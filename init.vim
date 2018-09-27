@@ -36,6 +36,11 @@ syntax on
 " change the leader key from "\" to ";" ("," is also popular)
 let mapleader=";"
 
+" tab config
+set tabstop=4
+set softtabstop=0 noexpandtab
+set shiftwidth=4
+
 " use ;; for escape
 " http://vim.wikia.com/wiki/Avoid_the_escape_key
 inoremap ;; <Esc>
