@@ -17,20 +17,21 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'kristijanhusak/vim-hybrid-material'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'scrooloose/nerdtree'
-Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plugin 'w0rp/ale'
+Plugin 'Shougo/deoplete.nvim'
 Plugin 'SirVer/ultisnips'
 Plugin 'vim-airline/vim-airline'
 Plugin 'arakashic/chromatica.nvim'
 Plugin 'majutsushi/tagbar'
-Plugin 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plugin 'autozimu/LanguageClient-neovim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 " Load other config files
-runtime! config/python.nvim
+source $HOME/.config/nvim/config/python.nvim
+source $HOME/.config/nvim/config/chromatica.nvim
+source $HOME/.config/nvim/config/langserver.nvim
 
 syntax on
 
@@ -123,10 +124,6 @@ endfunction
 " =====================================
 let g:airline_theme='hybrid'
 
-" python path
-let g:python3_host_prog = $PYTHON_36"'/usr/local/bin/python3.6'
-let g:python_host_prog =  $PYTHON_2"'/usr/local/bin/python2.7'
-
 " lang server
 let g:LangaugeClient_autoStart = 1
 let g:LanguageClient_settingsPath = $HOME.'/.config/nvim/settings.json'
@@ -162,11 +159,6 @@ call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
-" deoplete-racer config
-let g:deoplete#sources#rust#racer_binary='/Users/aenayet/.cargo/bin/racer'
-let g:deoplete#sources#rust#rust_source_path= '/Users/aenayet/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src'
-" deoplete end
-
 let g:UltiSnipsUsePythonVersion = 3
 "let g:UltiSnipsExpandTrigger="<tab>"
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -183,8 +175,6 @@ let g:ale_completion_enabled = 1
 
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
-let g:chromatica#enable_at_startup = 1
-let g:chromatica#libclang_path = '/usr/local/opt/llvm/lib'
 
 " =====================================
 " Test
