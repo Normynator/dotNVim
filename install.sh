@@ -19,16 +19,18 @@ check_clone () {
 install () {
 	# Clone vundle as plugin manager
 	files=(bundle/Vundle.vim/*)
-	if [ ! ${#files[@]} -gt 0 ]; then
+	if [ ! ${#files[@]} -gt 0 ] || [ ! -d "bundle/Vundle.cim" ]; then
 		git clone https://github.com/VundleVim/Vundle.vim.git bundle/Vundle.vim
 		check_clone "bundle/Vundle.vim/*"	
 	else
 		echo "Vundle files do already exist, skip cloning"
 	fi
 	
+
 	# Install language client
 	files=(bundle/LanguageClient-neovim/*)
-	if [ ! ${#files[@]} -gt 0 ]; then
+	echo ${#files[@]}
+	if [ ! ${#files[@]} -gt 0 ] || [ ! -d "bundle/LanguageClient-neovim" ]; then
 		git clone --depth 1 https://github.com/autozimu/LanguageClient-neovim.git bundle/LanguageClient-neovim
 		check_clone "bundle/LanguageClient-neovim/*"
 		cd bundle/LanguageClient-neovim
@@ -36,6 +38,20 @@ install () {
 		cd ../..
 	else
 		echo "LanguageClient files do already exist, skip cloning and install."
+	fi
+
+	# Install cquery
+	files=(cquery/*)
+	if [ ! ${#files[@]} -gt 0 ] || [ ! -d "cquery" ]; then
+		git clone --recursive https://github.com/cquery-project/cquery.git
+		cd cquery
+		git submodule update --init
+		mkdir build && cd build
+		cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=release -DCMAKE_EXPORT_COMPILE_COMMANDS=YES
+		cmake --build .
+		cmake --build . --target install
+	else
+		echo "cquery files do already exist, skip cloning and building"
 	fi
 
 	# Check if nvim folder already exists for user and if overwriting 
@@ -79,19 +95,6 @@ generate () {
 		exit 0
 	fi
 	echo "let g:chromatica#enable_at_startup = 1" >> $MP
-
-	# lang server
-	MP="config/langserver.nvim"
-	echo "let g:LangaugeClient_autoStart = 1" > $MP
-	echo "let g:LanguageClient_settingsPath = $HOME.'/.config/nvim/settings.json'" >> $MP
-	echo "let g:LanguageClient_loadSettings = 1" >> $MP
-	echo "let g:LanguageClient_logginLevel = 'DEBUG'" >> $MP
-	echo "let g:LanguageClient_serverCommands = {" >> $MP
-	echo "\ 'cpp': ['/Users/normanziebal/cquery/build/release/bin/cquery', '--log-file=/tmp/cq.log']," >> $MP
-	echo "\ 'python': ['pyls', '-v']," >> $MP
-	echo "\ }" >> $MP
-
-
 }
 
 # Checks for all required dependencies and tries to install them.

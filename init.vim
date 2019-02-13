@@ -28,10 +28,12 @@ Plugin 'autozimu/LanguageClient-neovim'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-" Load other config files
+" Load additional config files
 source $HOME/.config/nvim/config/python.nvim
 source $HOME/.config/nvim/config/chromatica.nvim
 source $HOME/.config/nvim/config/langserver.nvim
+source $HOME/.config/nvim/config/deoplete.nvim
+source $HOME/.config/nvim/config/basic.nvim
 
 syntax on
 
@@ -123,37 +125,6 @@ endfunction
 " Variables
 " =====================================
 let g:airline_theme='hybrid'
-
-" lang server
-let g:LangaugeClient_autoStart = 1
-let g:LanguageClient_settingsPath = $HOME.'/.config/nvim/settings.json'
-"let g:LanguageClient_loadSettings = 1
-let g:LanguageClient_logginLevel = 'DEBUG'
-let g:LanguageClient_serverCommands = {
-	\ 'cpp': ['/Users/normanziebal/cquery/build/release/bin/cquery', '--log-file=/tmp/cq.log'],
-	\ 'python': ['pyls', '-v'],
-\ }
-
-" deoplete options
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
-" disable autocomplete by default
-" let b:deoplete_disable_auto_complete=1 
-" let g:deoplete_disable_auto_complete=1
-" call deoplete#custom#buffer_option('auto_complete', v:false)
-
-if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
-endif
-
-" Disable the candidates in Comment/String syntaxes.
-call deoplete#custom#source('_',
-            \ 'disabled_syntaxes', ['Comment', 'String'])
-
-call deoplete#custom#source('LanguageClient',
-            \ 'min_pattern_length',
-            \ 2)
 
 call deoplete#custom#source('ultisnips', 'matchers', ['matcher_fuzzy'])
 

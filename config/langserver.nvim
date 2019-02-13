@@ -1,0 +1,8 @@
+let g:LangaugeClient_autoStart = 1
+let g:LanguageClient_settingsPath = '/root/.config/nvim/settings.json'
+let g:LanguageClient_loadSettings = 1
+let g:LanguageClient_logginLevel = 'DEBUG'
+let g:LanguageClient_serverCommands = {
+\ 'cpp': ['/root/.config/nvim/cquery/build/release/bin/cquery', '--log-file=/tmp/cq.log'],
+\ 'python': ['pyls', '-v'],
+\ }
