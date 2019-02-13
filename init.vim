@@ -6,7 +6,7 @@ set rtp+=~/.config/nvim/bundle/Vundle.vim
 
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
-call vundle#begin('~/.config/nvim/bundle')
+call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -28,6 +28,10 @@ Plugin 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" Load other config files
+runtime! config/python.nvim
+
 syntax on
 
 " =====================================
@@ -120,8 +124,8 @@ endfunction
 let g:airline_theme='hybrid'
 
 " python path
-let g:python3_host_prog = '/usr/local/bin/python3.6'
-let g:python_host_prog = '/usr/local/bin/python2.7'
+let g:python3_host_prog = $PYTHON_36"'/usr/local/bin/python3.6'
+let g:python_host_prog =  $PYTHON_2"'/usr/local/bin/python2.7'
 
 " lang server
 let g:LangaugeClient_autoStart = 1
